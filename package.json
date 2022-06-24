@@ -8,7 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "autoprefixer": "^10.4.7",
     "element-plus": "^2.2.6",
+    "postcss": "^8.4.14",
+    "tailwindcss": "^3.1.4",
     "unplugin-auto-import": "^0.9.1",
     "unplugin-vue-components": "^0.19.9",
     "vue": "^3.2.25",

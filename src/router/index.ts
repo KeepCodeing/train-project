@@ -2,9 +2,13 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
   {
-    path: "/dashbord",
-    name: "",
-    component: () => "",
+    path: "/",
+    redirect: "/dashboard",
+  },
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    component: () => import("@views/dashboard/index.vue"),
   },
 ];
 

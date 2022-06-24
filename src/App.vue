@@ -3,6 +3,6 @@
 </script>
 
 <template>
-  <el-button>asdf</el-button>
-  <!-- <router-view></router-view> -->
+  <!-- <el-button>asdf</el-button> -->
+  <router-view></router-view>
 </template>

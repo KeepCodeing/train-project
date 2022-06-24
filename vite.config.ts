@@ -17,4 +17,10 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
   ],
+  resolve: {
+    alias: {
+      "@components": "/src/components",
+      "@views": "/src/view",
+    },
+  },
 });
