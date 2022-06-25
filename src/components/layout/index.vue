@@ -2,7 +2,7 @@
   <el-container style="height: 100%">
     <el-header class="header">Header</el-header>
     <el-container>
-      <el-aside width="200px" class="menu">
+      <el-aside width="220px" class="menu">
         <Menu />
       </el-aside>
       <el-main>
