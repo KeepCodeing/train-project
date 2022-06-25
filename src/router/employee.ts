@@ -5,7 +5,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/employee",
     name: "employee",
-    redirect: "/employee/info",
+    component: () => import("@views/index.vue"),
     meta: {
       title: "员工管理",
       icon: "user-filled",
@@ -14,13 +14,13 @@ const routes: RouteRecordRaw[] = [
       {
         path: "emp_info",
         name: "emp_info",
-        component: () => null,
+        component: () => import("@views/employee/info/index.vue"),
         meta: { title: "信息管理", icon: "info-filled" },
       },
       {
         path: "contract",
         name: "contract",
-        component: () => null,
+        component: () => import("@views/employee/contract/index.vue"),
         meta: { title: "合同管理", icon: "document" },
       },
     ],

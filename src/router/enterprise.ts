@@ -5,19 +5,19 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/enterprise",
     name: "enterprise",
-    redirect: "/enterprise/info",
+    component: () => import("@views/index.vue"),
     meta: { title: "企业管理", icon: "suitcase" },
     children: [
       {
         path: "info",
         name: "info",
-        component: () => null,
-        meta: { title: "企业信息", icon: "files" },
+        component: () => import("@views/enterprise/info/index.vue"),
+        meta: { title: "企业信息", icon: "place" },
       },
       {
         path: "department",
         name: "department",
-        component: () => null,
+        component: () => import("@views/enterprise/department/index.vue"),
         meta: { title: "部门管理", icon: "data-analysis" },
       },
     ],

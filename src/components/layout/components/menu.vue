@@ -30,6 +30,8 @@
           <el-menu-item
             :index="`${item.path}/${subitem.path}`"
             v-if="!subitem.meta!.hidden"
+            :route="subitem"
+            @click="$router.push(`${item.path}/${subitem.path}`)"
           >
             <el-icon>
               <component

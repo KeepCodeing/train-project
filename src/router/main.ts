@@ -5,19 +5,20 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/dashboard",
     name: "dashboard",
+    component: () => import("@views/index.vue"),
     redirect: "/dashboard/home",
     children: [
       {
-        path: "/home",
-        component: () => import("@views/dashboard/home.vue"),
+        path: "home",
+        component: () => import("@views/dashboard/home/index.vue"),
         meta: {
           title: "公司首页",
           icon: "connection",
         },
       },
       {
-        path: "/message",
-        component: () => import("@views/dashboard/message.vue"),
+        path: "message",
+        component: () => import("@views/dashboard/message/index.vue"),
         meta: {
           title: "我的留言",
           icon: "comment",

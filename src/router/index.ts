@@ -11,8 +11,9 @@ import Enterprise from "./enterprise";
 
 export const routes: RouteRecordRaw[] = [
   {
-    path: "/",
+    path: "",
     redirect: "/dashboard",
+    children: [],
     meta: {
       hidden: true,
     },

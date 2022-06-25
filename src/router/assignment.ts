@@ -5,19 +5,21 @@ const routes: RouteRecordRaw[] = [
   {
     path: "/assignment",
     name: "assignment",
-    redirect: "/assignment/info",
+    component: () => import("@views/index.vue"),
     meta: { title: "任务管理", icon: "management" },
     children: [
       {
-        path: "info",
-        name: "info",
-        component: () => null,
-        meta: { title: "任务列表", icon: "tickets" },
+        path: "assignment_info",
+        // 踩坑：name和path一样重要，可以作为路由唯一标识，如果
+        // 出现重复可能导致路由匹配失败
+        name: "assignment_info",
+        component: () => import("@views/assignment/info/index.vue"),
+        meta: { title: "任务列表", icon: "position" },
       },
       {
         path: "summary",
         name: "summary",
-        component: () => null,
+        component: () => import("@views/assignment/summary/index.vue"),
         meta: { title: "工作总结", icon: "collection-tag" },
       },
     ],
