@@ -8,6 +8,8 @@ declare module '@vue/runtime-core' {
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElContainer: typeof import('element-plus/es')['ElContainer']
+    ElForm: typeof import('element-plus/es')['ElForm']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElMain: typeof import('element-plus/es')['ElMain']
@@ -15,6 +17,7 @@ declare module '@vue/runtime-core' {
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    Form: typeof import('./src/components/form/index.vue')['default']
     IEpAddLocation: typeof import('~icons/ep/add-location')['default']
     IEpEdit: typeof import('~icons/ep/edit')['default']
     IEpHomeFilled: typeof import('~icons/ep/home-filled')['default']
@@ -22,6 +25,7 @@ declare module '@vue/runtime-core' {
     Menu: typeof import('./src/components/layout/components/menu.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ViewLayout: typeof import('./src/components/layout/view-layout/index.vue')['default']
   }
 }
 
