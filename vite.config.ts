@@ -1,6 +1,9 @@
 import { defineConfig } from "vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 
+import IconsResolver from "unplugin-icons/resolver";
+import Icons from "unplugin-icons/vite";
+
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 
@@ -11,12 +14,15 @@ export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
+      imports: ["vue"],
       resolvers: [ElementPlusResolver()],
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver(), IconsResolver()],
     }),
+    Icons(),
   ],
+
   resolve: {
     alias: {
       "@components": "/src/components",
