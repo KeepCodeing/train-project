@@ -21,6 +21,7 @@ export default defineConfig({
     alias: {
       "@components": "/src/components",
       "@views": "/src/view",
+      "@api": "/src/service",
     },
   },
 });
