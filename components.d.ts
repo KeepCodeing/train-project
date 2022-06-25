@@ -17,6 +17,7 @@ declare module '@vue/runtime-core' {
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     IEpAddLocation: typeof import('~icons/ep/add-location')['default']
     IEpEdit: typeof import('~icons/ep/edit')['default']
+    IEpHomeFilled: typeof import('~icons/ep/home-filled')['default']
     Layout: typeof import('./src/components/layout/index.vue')['default']
     Menu: typeof import('./src/components/layout/components/menu.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
