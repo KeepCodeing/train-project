@@ -162,7 +162,7 @@ export default defineComponent({
   // 发现作用域插槽的形式只能在插槽里拿到action，然而有些
   // 操作（例如登陆的切换）是需要全局的，所以还是提供expose的
   // 形式
-  expose: ["clearForm", "submitForm"],
+  expose: ["clearForm", "submitForm", "model"],
 });
 
 // const components = defineComponent({

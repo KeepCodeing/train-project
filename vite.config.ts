@@ -23,11 +23,21 @@ export default defineConfig({
     Icons(),
   ],
 
+  server: {
+    proxy: {
+      "^/api": {
+        target: "http://huiyuanai.cloud:8091",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
+
   resolve: {
     alias: {
       "@components": "/src/components",
       "@views": "/src/view",
-      "@api": "/src/service",
+      "@service": "/src/service",
     },
   },
 });

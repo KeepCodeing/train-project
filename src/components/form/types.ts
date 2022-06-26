@@ -40,12 +40,16 @@ export interface FormOptionProp {
 }
 
 export interface FormProp {
+  // 表单数据源
   model: any;
 
+  // 验证规则
   rules?: FormRules;
 
+  // 渲染字段
   options: FormOptionProp[];
 
+  // 标签样式等
   labelWidth?: string | number;
   labelPosition?: "left" | "right" | "top";
   size?: "large" | "default" | "small";

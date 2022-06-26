@@ -27,6 +27,14 @@ export const routes: RouteRecordRaw[] = [
       title: "登陆",
     },
   },
+  {
+    path: "/:pathMatch(.*)",
+    name: "notFound",
+    component: () => import("@views/404.vue"),
+    meta: {
+      hidden: true,
+    },
+  },
   ...Main,
   ...Employee,
   ...Assignment,

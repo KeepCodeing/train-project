@@ -35,19 +35,26 @@
                 ></el-input>
               </el-col>
               <el-col :span="6">
-                <el-button class="w-full" type="primary">发送</el-button>
+                <el-button class="w-full" @click="sendMessage" type="primary"
+                  >发送</el-button
+                >
               </el-col>
             </el-row>
           </template>
           <template #actions="scoped">
             <el-button
-              v-if="logState !== 'reg'"
+              v-if="logState === 'login'"
               class="phone-text"
               @click="changeLogin('phone')"
               link
-              >{{
-                logState === "login" ? "手机号登陆" : "账号密码登陆"
-              }}</el-button
+              >手机号登陆</el-button
+            >
+            <el-button
+              v-if="logState === 'phone'"
+              class="phone-text"
+              @click="changeLogin('login')"
+              link
+              >账号密码登陆</el-button
             >
             <el-button
               @click="scoped.submitForm(handleSubmit)"
@@ -70,6 +77,8 @@
 <script setup lang="ts">
 import { FormProp } from "../../../components/types";
 import { ref, reactive, computed, inject } from "vue";
+import { userLogin } from "@service/login";
+
 import AdvancedForm from "@components/form/index.vue";
 
 // true注册，false登陆
@@ -151,18 +160,36 @@ const formOptions = reactive<FormProp>({
   ],
 });
 
+const sendMessage = () => {
+  if (form.value.model.phone.length !== 11) {
+    $baseMessage({
+      message: "请输入有效的手机号！",
+      type: "error",
+    });
+
+    return;
+  }
+
+  $baseMessage({
+    message: "验证码发送成功！",
+    type: "success",
+  });
+};
+
 const handleSubmit = (valid: boolean, model: any) => {
   // 针对手机号情况进行特判
   if (logState.value === "phone" && !validCode.value) {
     $baseMessage({
       message: "请输入验证码！",
-      type: "warning",
+      type: "error",
     });
     return;
   }
   if (!valid) return;
-  console.log(valid, model);
-  // console.log(formOptions.options);
+
+  userLogin(model, logState.value);
+
+  // console.log(valid, model);
 };
 </script>
 
