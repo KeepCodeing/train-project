@@ -9,35 +9,41 @@
     v-bind="attrs"
     ref="form"
   >
-    <el-form-item
-      v-for="opt in options"
-      :prop="opt.prop"
-      :label="opt.label"
-      :key="opt.prop"
-      :required="opt.required"
-    >
-      <component
-        v-model="model[opt.prop]"
-        :placeholder="opt.placeholder"
-        :disabled="opt.disabled"
-        :show-password="opt.showPassword"
-        :clearable="opt.clearable"
-        :is="`el-${opt.type}`"
-        v-bind="opt.attrs"
+    <template v-for="opt in options" :key="opt.prop">
+      <el-form-item
+        v-if="!opt.hidden && opt.type !== 'slot'"
+        :prop="opt.prop"
+        :label="opt.label"
+        :required="opt.required"
       >
-        <template v-if="opt.children?.length">
-          <component
-            v-for="child in opt.children"
-            :key="child.prop"
-            :placeholder="opt.placeholder"
-            :disabled="opt.disabled"
-            :show-password="opt.showPassword"
-            :label="opt.label"
-            :is="`el-${opt.type}`"
-          ></component>
-        </template>
-      </component>
-    </el-form-item>
+        <component
+          v-model="model[opt.prop]"
+          :placeholder="opt.placeholder"
+          :disabled="opt.disabled"
+          :show-password="opt.showPassword"
+          :clearable="opt.clearable"
+          :is="`el-${opt.type}`"
+          v-bind="opt.attrs"
+        >
+          <template v-if="opt.children?.length">
+            <component
+              v-for="child in opt.children"
+              :key="child.prop"
+              :placeholder="opt.placeholder"
+              :disabled="opt.disabled"
+              :show-password="opt.showPassword"
+              :label="opt.label"
+              :is="`el-${opt.type}`"
+            ></component>
+          </template>
+        </component>
+      </el-form-item>
+      <!-- 插槽项交给父组件自己处理 -->
+      <el-form-item v-else-if="!opt.hidden">
+        <slot :name="opt.slot" :model="model"></slot>
+      </el-form-item>
+    </template>
+
     <el-form-item v-bind="actionAttrs">
       <slot name="actions" :clearForm="clearForm" :submitForm="submitForm">
         <el-button
@@ -63,7 +69,7 @@
 // 3. 提供自定义校验规则
 
 import { FormProp } from "./types";
-import { PropType, reactive, defineComponent, ref, onMounted } from "vue";
+import { PropType, reactive, defineComponent, ref } from "vue";
 import { cloneDeep } from "lodash";
 // 自动导入无法和动态组件一起正常使用，于是得手动导入
 // 而且setup语法糖支持有问题，改为普通方式才行
@@ -114,6 +120,16 @@ export default defineComponent({
 
     const form = ref<FormInstance>();
 
+    // watch(
+    //   options,
+    //   () => {
+    //     console.log(formOptions.options);
+    //   },
+    //   {
+    //     deep: true,
+    //   }
+    // );
+
     const clearForm = () => {
       form.value?.resetFields();
     };
@@ -121,7 +137,7 @@ export default defineComponent({
     const submitForm = (cb: Function | null) => {
       form.value?.validate((valid) => {
         // 可以传入空，这样就会调用默认行为，否则调用回调
-        cb ? cb(valid) : emit(valid ? "success" : "failed");
+        cb ? cb(valid, model) : emit(valid ? "success" : "failed");
       });
     };
 

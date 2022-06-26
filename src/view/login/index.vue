@@ -1,44 +1,11 @@
 <template>
-  <!-- <advanced-form :form-options="formOptions">
-    <template #actions="scoped">
-      <span
-        @click="
-          scoped.submitForm((valid: boolean) => {
-            log(valid);
-          })
-        "
-        >click me</span
-      >
-    </template>
-  </advanced-form> -->
+  <div class="w-full h-full relative bg-[rgb(246,248,250)]">
+    <login-card />
+  </div>
 </template>
 
 <script setup lang="ts">
-import AdvancedForm from "@components/form/index.vue";
-import { FormProp } from "../../components/types";
-
-// 这里传入的数据不强制要求是reactive，因为实际上
-// 这里用不着，只是做个model的填充而已
-const userInfo = {
-  phone: "",
-  validCode: "",
-};
-
-const formOptions: FormProp = {
-  model: userInfo,
-  options: [
-    {
-      prop: "phone",
-      type: "input",
-    },
-    {
-      prop: "validCode",
-      type: "input",
-    },
-  ],
-};
-
-const log = console.log;
+import LoginCard from "./components/login-card.vue";
 </script>
 
 <style scoped></style>
