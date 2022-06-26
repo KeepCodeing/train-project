@@ -25,6 +25,10 @@
           <template #valid-code>
             <el-row class="w-full">
               <el-col :span="18" class="pr-3">
+                <!-- 由于自定义的表单项没法在form里进行绑定，所以也没法进行
+                     校验？总之这里是没法的了，改为CSS样式提示了...算了，
+                     还是直接消息框提示了w
+                 -->
                 <el-input
                   v-model="validCode"
                   placeholder="请输入验证码"
@@ -65,8 +69,7 @@
 
 <script setup lang="ts">
 import { FormProp } from "../../../components/types";
-import { ref, reactive, computed } from "vue";
-import { FormInstance } from "element-plus";
+import { ref, reactive, computed, inject } from "vue";
 import AdvancedForm from "@components/form/index.vue";
 
 // true注册，false登陆
@@ -77,6 +80,8 @@ const logState = ref<string>("login");
 const validCode = ref("");
 
 const form = ref<any>();
+
+const $baseMessage: any = inject("$baseMessage");
 
 const changeLogin = (state: string) => {
   logState.value = state;
@@ -148,9 +153,14 @@ const formOptions = reactive<FormProp>({
 
 const handleSubmit = (valid: boolean, model: any) => {
   // 针对手机号情况进行特判
-  if (model.phone.length !== 11 || !validCode.value) {
+  if (logState.value === "phone" && !validCode.value) {
+    $baseMessage({
+      message: "请输入验证码！",
+      type: "warning",
+    });
     return;
   }
+  if (!valid) return;
   console.log(valid, model);
   // console.log(formOptions.options);
 };
