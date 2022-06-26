@@ -5,14 +5,14 @@
     <div class="col-span-4 p-20 text-center">
       <div class="text-3xl font-serif font-medium text-[rgb(225,216,195)]">
         <span
-          @click="logState = 'reg'"
+          @click="changeLogin('reg')"
           :class="{ 'active-btn': logState === 'reg' }"
           class="cursor-pointer"
           >注册</span
         >
         <span class="text-blue-300 px-3">/</span>
         <span
-          @click="logState = 'login'"
+          @click="changeLogin('login')"
           :class="{
             'active-btn': logState === 'login' || logState === 'phone',
           }"
@@ -21,7 +21,7 @@
         >
       </div>
       <div class="mt-20 px-20">
-        <advanced-form :form-options="formOptions">
+        <advanced-form ref="form" :form-options="formOptions">
           <template #valid-code>
             <el-row class="w-full">
               <el-col :span="18" class="pr-3">
@@ -39,7 +39,7 @@
             <el-button
               v-if="logState !== 'reg'"
               class="phone-text"
-              @click="logState = logState === 'phone' ? 'login' : 'phone'"
+              @click="changeLogin('phone')"
               link
               >{{
                 logState === "login" ? "手机号登陆" : "账号密码登陆"
@@ -66,6 +66,7 @@
 <script setup lang="ts">
 import { FormProp } from "../../../components/types";
 import { ref, reactive, computed } from "vue";
+import { FormInstance } from "element-plus";
 import AdvancedForm from "@components/form/index.vue";
 
 // true注册，false登陆
@@ -74,6 +75,13 @@ import AdvancedForm from "@components/form/index.vue";
 const logState = ref<string>("login");
 
 const validCode = ref("");
+
+const form = ref<any>();
+
+const changeLogin = (state: string) => {
+  logState.value = state;
+  form.value?.clearForm();
+};
 
 const formOptions = reactive<FormProp>({
   model: {
@@ -139,8 +147,12 @@ const formOptions = reactive<FormProp>({
 });
 
 const handleSubmit = (valid: boolean, model: any) => {
-  // console.log(valid, model);
-  console.log(formOptions.options);
+  // 针对手机号情况进行特判
+  if (model.phone.length !== 11 || !validCode.value) {
+    return;
+  }
+  console.log(valid, model);
+  // console.log(formOptions.options);
 };
 </script>
 

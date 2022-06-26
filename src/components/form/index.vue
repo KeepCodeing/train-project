@@ -6,6 +6,8 @@
     :label-width="labelWidth"
     :label-position="labelPosition"
     :size="size"
+    :validate-on-rule-change="false"
+    hide-required-asterisk
     v-bind="attrs"
     ref="form"
   >
@@ -48,7 +50,7 @@
       <slot name="actions" :clearForm="clearForm" :submitForm="submitForm">
         <el-button
           v-if="!defaultAction || defaultAction?.clear?.show"
-          @click="clearForm"
+          @click="clearForm(null)"
         >
           {{ defaultAction?.clear?.name || "清空" }}</el-button
         >
@@ -130,8 +132,9 @@ export default defineComponent({
     //   }
     // );
 
-    const clearForm = () => {
-      form.value?.resetFields();
+    const clearForm = (cb: Function | null) => {
+      if (!cb) return form.value?.resetFields();
+      cb(form.value?.resetFields);
     };
 
     const submitForm = (cb: Function | null) => {
@@ -156,6 +159,10 @@ export default defineComponent({
       submitForm,
     };
   },
+  // 发现作用域插槽的形式只能在插槽里拿到action，然而有些
+  // 操作（例如登陆的切换）是需要全局的，所以还是提供expose的
+  // 形式
+  expose: ["clearForm", "submitForm"],
 });
 
 // const components = defineComponent({
