@@ -1,5 +1,16 @@
 <template>
-  <advanced-form :form-options="formOptions"></advanced-form>
+  <!-- <advanced-form :form-options="formOptions">
+    <template #actions="scoped">
+      <span
+        @click="
+          scoped.submitForm((valid: boolean) => {
+            log(valid);
+          })
+        "
+        >click me</span
+      >
+    </template>
+  </advanced-form> -->
 </template>
 
 <script setup lang="ts">
@@ -26,6 +37,8 @@ const formOptions: FormProp = {
     },
   ],
 };
+
+const log = console.log;
 </script>
 
 <style scoped></style>
