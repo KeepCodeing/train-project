@@ -20,6 +20,9 @@ const instance = axios.create({
   // baseURL: import.meta.env.PROD
   //   ? import.meta.env.VITE_PRO_BASE_URL
   //   : import.meta.env.VITE_DEV_BASE_URL,
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
 });
 
 const handleData = (resp: AxiosResponse) => {

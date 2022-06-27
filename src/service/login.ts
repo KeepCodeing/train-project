@@ -30,12 +30,32 @@ export function userRegister({ userName, password, phone }: LoginProp) {
   });
 }
 
+export function sendValidCode({ phone }: LoginProp) {
+  console.log(phone);
+
+  return request({
+    url: "/api/personnelmanagementsystem/sysuser/sendVerificationCodeByPhone",
+    method: "GET",
+    params: {
+      phone,
+    },
+  });
+}
+
 export function phoneLogin({ phone, validCode }: LoginProp) {
   // 手机号登陆
+  return request({
+    url: "/api/personnelmanagementsystem/sysuser/userLoginByPhoneAndVerificationCode",
+    method: "POST",
+    data: {
+      phone,
+      code: validCode,
+    },
+  });
 }
 
 export function userLogin(model: LoginProp, type: string) {
-  if (type === "login") accountLogin(model);
-  if (type === "reg") userRegister(model);
-  if (type === "phone") phoneLogin(model);
+  if (type === "login") return accountLogin(model);
+  if (type === "reg") return userRegister(model);
+  if (type === "phone") return phoneLogin(model);
 }

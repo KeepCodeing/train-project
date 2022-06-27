@@ -20,6 +20,8 @@ declare module '@vue/runtime-core' {
     ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     Form: typeof import('./src/components/form/index.vue')['default']
     IEpAddLocation: typeof import('~icons/ep/add-location')['default']
     IEpEdit: typeof import('~icons/ep/edit')['default']
@@ -28,6 +30,7 @@ declare module '@vue/runtime-core' {
     Menu: typeof import('./src/components/layout/components/menu.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Table: typeof import('./src/components/table/index.vue')['default']
     ViewLayout: typeof import('./src/components/layout/view-layout/index.vue')['default']
   }
 }

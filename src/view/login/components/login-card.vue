@@ -35,7 +35,11 @@
                 ></el-input>
               </el-col>
               <el-col :span="6">
-                <el-button class="w-full" @click="sendMessage" type="primary"
+                <el-button
+                  class="w-full"
+                  :loading="btnLoading"
+                  @click="sendMessage"
+                  type="primary"
                   >发送</el-button
                 >
               </el-col>
@@ -77,7 +81,8 @@
 <script setup lang="ts">
 import { FormProp } from "../../../components/types";
 import { ref, reactive, computed, inject } from "vue";
-import { userLogin } from "@service/login";
+import { userLogin, sendValidCode } from "@service/login";
+import { useRouter } from "vue-router";
 
 import AdvancedForm from "@components/form/index.vue";
 
@@ -91,6 +96,10 @@ const validCode = ref("");
 const form = ref<any>();
 
 const $baseMessage: any = inject("$baseMessage");
+
+const router = useRouter();
+
+const btnLoading = ref(false);
 
 const changeLogin = (state: string) => {
   logState.value = state;
@@ -160,7 +169,7 @@ const formOptions = reactive<FormProp>({
   ],
 });
 
-const sendMessage = () => {
+const sendMessage = async () => {
   if (form.value.model.phone.length !== 11) {
     $baseMessage({
       message: "请输入有效的手机号！",
@@ -170,9 +179,22 @@ const sendMessage = () => {
     return;
   }
 
-  $baseMessage({
-    message: "验证码发送成功！",
-    type: "success",
+  btnLoading.value = true;
+
+  sendValidCode(form.value.model).then((res: any) => {
+    if (res.code === 400) {
+      $baseMessage({
+        message: "验证码发送失败，请重试！",
+        type: "error",
+      });
+      btnLoading.value = false;
+    } else {
+      $baseMessage({
+        message: "验证码发送成功，一分钟内有效哦！",
+        type: "success",
+      });
+      setTimeout(() => (btnLoading.value = false), 60000);
+    }
   });
 };
 
@@ -187,7 +209,44 @@ const handleSubmit = (valid: boolean, model: any) => {
   }
   if (!valid) return;
 
-  userLogin(model, logState.value);
+  btnLoading.value = true;
+
+  userLogin({ ...model, validCode: validCode.value }, logState.value).then(
+    (res: any) => {
+      if (logState.value === "reg" && res.code === 200) {
+        $baseMessage({
+          message: "注册成功！",
+          type: "success",
+        });
+        setTimeout(() => window.location.reload(), 300);
+        return;
+      }
+      if (logState.value === "reg" && res.code === 400) {
+        $baseMessage({
+          message: res.msg,
+          type: "error",
+        });
+        return;
+      }
+      if (res.code === 400) {
+        $baseMessage({
+          message:
+            logState.value === "login"
+              ? "用户名或密码错误辣！"
+              : "验证码错辣！",
+          type: "error",
+        });
+        return;
+      }
+      if (res.code === 200) {
+        $baseMessage({
+          message: "登陆成功辣！",
+          type: "success",
+        });
+        setTimeout(() => router.replace("/dashboard/home"), 300);
+      }
+    }
+  );
 
   // console.log(valid, model);
 };
