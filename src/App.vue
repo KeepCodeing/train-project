@@ -3,7 +3,9 @@ import Layout from "./components/layout/index.vue";
 </script>
 
 <template>
-  <router-view></router-view>
+  <suspense>
+    <router-view></router-view>
+  </suspense>
 </template>
 
 <style>

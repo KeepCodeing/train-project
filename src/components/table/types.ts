@@ -27,4 +27,5 @@ export interface TableProp {
   border?: boolean;
   size?: "large" | "default" | "small";
   emptyText?: string;
+  fit?: boolean;
 }

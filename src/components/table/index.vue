@@ -6,6 +6,7 @@
     :stripe="tableOptions.stripe"
     :border="tableOptions.border"
     :size="tableOptions.size"
+    :fit="tableOptions.fit"
     :emptyText="tableOptions.emptyText"
   >
     <template v-for="opt in columnOptions" :key="opt.prop">

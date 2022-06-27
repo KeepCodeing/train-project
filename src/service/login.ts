@@ -31,8 +31,6 @@ export function userRegister({ userName, password, phone }: LoginProp) {
 }
 
 export function sendValidCode({ phone }: LoginProp) {
-  console.log(phone);
-
   return request({
     url: "/api/personnelmanagementsystem/sysuser/sendVerificationCodeByPhone",
     method: "GET",
