@@ -8,6 +8,7 @@
     :size="tableOptions.size"
     :fit="tableOptions.fit"
     :emptyText="tableOptions.emptyText"
+    v-loading="loading"
   >
     <template v-for="opt in columnOptions" :key="opt.prop">
       <el-table-column
@@ -35,8 +36,8 @@
   -->
   <el-pagination
     v-if="paginationOption?.show"
-    v-model:current-page="currentPage"
-    v-model:page-size="pageSize"
+    v-model:current-page="tp"
+    v-model:page-size="ps"
     :small="paginationOption?.small"
     :disabled="paginationOption?.disabled"
     :background="paginationOption?.background"
@@ -44,14 +45,13 @@
       paginationOption?.layout || 'total, sizes, prev, pager, next, jumper'
     "
     :total="paginationOption?.total"
-    @size-change="$emit('size-change')"
-    @current-change="$emit('current-change')"
+    class="mt-5"
   />
 </template>
 
 <script setup lang="ts">
 import { TableProp } from "./types";
-import { defineProps, PropType } from "vue";
+import { defineProps, PropType, computed, defineEmits, useAttrs } from "vue";
 import { ElPagination } from "element-plus";
 
 const props = defineProps({
@@ -65,8 +65,24 @@ const props = defineProps({
   },
   pageSize: {
     type: Number,
-    default: 1,
+    default: 10,
   },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const emit = defineEmits(["update:current-page", "update:page-size"]);
+
+const tp = computed({
+  get: () => props.currentPage,
+  set: (val) => emit("update:current-page", val),
+});
+
+const ps = computed({
+  get: () => props.pageSize,
+  set: (val) => emit("update:page-size", val),
 });
 
 const { tableOptions } = props;

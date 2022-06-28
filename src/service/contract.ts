@@ -11,7 +11,7 @@ interface ContractProp {
 
 export function getContractData(params: ContractProp) {
   return request({
-    url: "/api/personnelmanagementsystem/contract/getSplitContractList?cp=1&ls=10",
+    url: "/api/personnelmanagementsystem/contract/getSplitContractList",
     method: "GET",
     params,
   });
