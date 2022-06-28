@@ -50,6 +50,9 @@ const tableOptions = reactive<TableProp>({
       width: 200,
     },
   ],
+  paginationOption: {
+    show: true,
+  },
 });
 </script>
 

@@ -1,6 +1,4 @@
-<script setup lang="ts">
-import Layout from "./components/layout/index.vue";
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <suspense>

@@ -16,6 +16,17 @@ export interface TableColumnProp {
   editable?: boolean;
 }
 
+export interface PaginationOption {
+  small?: boolean;
+  disabled?: boolean;
+  background?: boolean;
+  layout?: string;
+  total?: number;
+  pageSizes?: number[];
+
+  show?: boolean;
+}
+
 export interface TableProp {
   data: any[];
 
@@ -28,4 +39,6 @@ export interface TableProp {
   size?: "large" | "default" | "small";
   emptyText?: string;
   fit?: boolean;
+
+  paginationOption?: PaginationOption;
 }
