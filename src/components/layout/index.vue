@@ -1,6 +1,25 @@
 <template>
   <el-container style="height: 100%">
-    <el-header class="header">Header</el-header>
+    <el-header height="50px" class="header">
+      heard
+      <!-- 下拉菜单 -->
+      <el-dropdown class="right-dropdown">
+        <span>
+          欢迎登录:某某某
+          <el-icon><ArrowDown /></el-icon>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item @click="$router.push({ name: 'personal' })"
+              >个人信息</el-dropdown-item
+            >
+            <el-dropdown-item>个人合同</el-dropdown-item>
+            <el-dropdown-item>修改密码</el-dropdown-item>
+            <el-dropdown-item divided>退出系统</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+    </el-header>
     <el-container>
       <el-aside width="220px" class="menu">
         <Menu />
@@ -22,5 +41,13 @@ import Menu from "./components/menu.vue";
 }
 .header {
   background: var(--header-bg-color);
+  position: relative;
+}
+.right-dropdown {
+  position: absolute;
+  right: 80px;
+  color: white;
+  font-weight: bold;
+  line-height: 50px;
 }
 </style>
