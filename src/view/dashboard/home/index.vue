@@ -32,6 +32,14 @@
   </el-row>
 </template>
 <script setup lang="ts">
+import { findContract } from "@service/contract";
+import { getUserInfo } from "@service/user";
+
+const contractData = await findContract({ id: 1 });
+const userInfo = await getUserInfo(1);
+console.log(contractData);
+console.log(userInfo);
+
 const menuData = [
   {
     menuId: 1,
@@ -84,8 +92,7 @@ const menuData = [
 ];
 </script>
 
-
-<style scoped >
+<style scoped>
 .menuCard {
   margin: 10px 0;
 }
@@ -95,7 +102,6 @@ const menuData = [
   padding-bottom: 10px;
 }
 </style>
-</template>
 
 <script setup lang="ts"></script>
 
