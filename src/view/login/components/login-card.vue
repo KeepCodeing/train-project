@@ -1,6 +1,18 @@
 <template>
   <div
-    class="h-[700px] shadow-md bg-white w-[1100px] grid grid-cols-6 rounded-md overflow-hidden absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2"
+    class="
+      h-[700px]
+      shadow-md
+      bg-white
+      w-[1100px]
+      grid grid-cols-6
+      rounded-md
+      overflow-hidden
+      absolute
+      left-1/2
+      top-1/2
+      -translate-y-1/2 -translate-x-1/2
+    "
   >
     <div class="col-span-4 p-20 text-center">
       <div class="text-3xl font-serif font-medium text-[rgb(225,216,195)]">
@@ -17,7 +29,7 @@
             'active-btn': logState === 'login' || logState === 'phone',
           }"
           class="cursor-pointer"
-          >登陆</span
+          >登录</span
         >
       </div>
       <div class="mt-20 px-20">
@@ -51,14 +63,14 @@
               class="phone-text"
               @click="changeLogin('phone')"
               link
-              >手机号登陆</el-button
+              >手机号登录</el-button
             >
             <el-button
               v-if="logState === 'phone'"
               class="phone-text"
               @click="changeLogin('login')"
               link
-              >账号密码登陆</el-button
+              >账号密码登录</el-button
             >
             <el-button
               @click="scoped.submitForm(handleSubmit)"
@@ -67,7 +79,7 @@
               plain
               :class="logState ? 'login-btn' : 'reg-btn'"
               >{{
-                logState === "login" || logState === "phone" ? "登陆" : "注册"
+                logState === "login" || logState === "phone" ? "登录" : "注册"
               }}</el-button
             >
           </template>
@@ -86,8 +98,8 @@ import { useRouter } from "vue-router";
 
 import AdvancedForm from "@components/form/index.vue";
 
-// true注册，false登陆
-// 发现还有手机号和用户名登陆两种，所以改成三种模式了
+// true注册，false登录
+// 发现还有手机号和用户名登录两种，所以改成三种模式了
 // reg, login, phone
 const logState = ref<string>("login");
 
@@ -240,14 +252,21 @@ const handleSubmit = (valid: boolean, model: any) => {
       }
       if (res.code === 200) {
         $baseMessage({
-          message: "登陆成功辣！",
+          message: "登录成功辣！",
           type: "success",
         });
-        setTimeout(() => router.replace("/dashboard/home"), 300);
+        setTimeout(
+          () =>
+            router.replace({
+              path: "/dashboard/home",
+              query: { userName: model.userName },
+            }),
+          300
+        );
       }
     }
   );
-
+  //
   // console.log(valid, model);
 };
 </script>

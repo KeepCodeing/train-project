@@ -24,7 +24,7 @@ export const routes: RouteRecordRaw[] = [
     component: () => import("@views/login/index.vue"),
     meta: {
       hidden: true,
-      title: "登陆",
+      title: "登录",
     },
   },
   {
