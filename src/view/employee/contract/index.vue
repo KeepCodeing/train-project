@@ -5,8 +5,8 @@
       v-model:page-size="state.pageSize"
       :loading="loading"
       :tableOptions="tableOptions"
+      @updateContract="updateContract"
     ></advanced-table>
-    {{ ttt }}
   </div>
 </template>
 
@@ -14,14 +14,16 @@
 import AdvancedTable from "@components/table/index.vue";
 import { TableProp } from "../../../components/types";
 import { reactive, ref, onMounted, watch, toRefs } from "vue";
-import { getContractData } from "@service/contract";
+import {
+  getContractData,
+  updateContract as updateContractAPI,
+  ContractBodyProp,
+} from "@service/contract";
 
 // 这里出现了异步请求，但页面空白的问题...
 // 解决方案之一是用suspense包裹，另外就是用函数式async/await
 
 const loading = ref(false);
-
-const ttt = ref("");
 
 const state = reactive({
   contractList: [],
@@ -50,21 +52,23 @@ const tableOptions = reactive<TableProp>({
       prop: "contractName",
       label: "合同名称",
       width: 200,
+      editable: true,
     },
     {
       prop: "content",
       label: "合同内容",
       showOverflowTooltip: true,
+      editable: true,
     },
     {
       prop: "effectiveDate",
       label: "合同生效时间",
-      width: 200,
+      editable: true,
     },
     {
       prop: "expirationTime",
       label: "合同过期时间",
-      width: 200,
+      editable: true,
     },
   ],
   paginationOption: {
@@ -91,6 +95,10 @@ const loadTableData = async (params = { cp: 1, ls: 10 }) => {
   loading.value = false;
 };
 
+const updateContract = (row: ContractBodyProp) => {
+  updateContractAPI({ id: row.id, contractName: row.contractName });
+};
+
 watch([currentPage, pageSize], (val) => {
   loadTableData({
     cp: val[0],
@@ -101,8 +109,6 @@ watch([currentPage, pageSize], (val) => {
 onMounted(() => {
   loadTableData();
 });
-
-const log = console.log;
 </script>
 
 <style scoped></style>

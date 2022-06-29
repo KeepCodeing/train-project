@@ -76,7 +76,14 @@
 
 <script setup lang="ts">
 import { TableProp } from "./types";
-import { defineProps, PropType, computed, defineEmits, ref } from "vue";
+import {
+  defineProps,
+  PropType,
+  computed,
+  defineEmits,
+  ref,
+  useAttrs,
+} from "vue";
 import { ElPagination } from "element-plus";
 
 // 初版table，不支持内部维护分页状态、不支持增删改查等接口的实现
@@ -100,10 +107,12 @@ const props = defineProps({
   },
 });
 
+const { onUpdateContract: updateContract }: any = useAttrs();
+
 const emit = defineEmits([
   "update:current-page",
   "update:page-size",
-  "updateContract",
+  // "updateContract", 改为attrs直接传入
 ]);
 
 const tp = computed({
@@ -136,7 +145,8 @@ const handleCellClick = ($index: any, row: any, column: any) => {
 
 const handleCellCheck = ($index: any, row: any, column: any) => {
   currentEditCell.value = "";
-  emit("updateContract", row);
+  // emit("updateContract", row);
+  updateContract(row);
 };
 </script>
 
