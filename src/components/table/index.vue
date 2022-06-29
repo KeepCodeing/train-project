@@ -23,8 +23,33 @@
         :header-align="opt.headerAlign"
         v-if="!opt.hidden"
       >
-        <template v-if="opt.slot" #default="scoped">
-          <slot :name="opt.slot" :scoped="scoped"></slot>
+        <template #default="{ $index, row, column }">
+          <slot
+            v-if="opt.slot"
+            :name="opt.slot"
+            v-bind="{ $index, row, column }"
+          ></slot>
+          <template v-else-if="currentEditCell === $index + column['property']">
+            <el-input
+              style="width: 90%"
+              v-model="row[column['property']]"
+            ></el-input>
+            <el-icon
+              @click="handleCellCheck($index, row, column)"
+              class="ml-1 cursor-pointer"
+            >
+              <check />
+            </el-icon>
+          </template>
+          <template v-else-if="opt.editable">
+            <span>{{ row[opt.prop!] }}</span>
+            <el-icon
+              @click="handleCellClick($index, row, column)"
+              class="ml-1 cursor-pointer"
+            >
+              <edit />
+            </el-icon>
+          </template>
         </template>
         <!-- 未完成：editable功能 -->
       </el-table-column>
@@ -51,8 +76,10 @@
 
 <script setup lang="ts">
 import { TableProp } from "./types";
-import { defineProps, PropType, computed, defineEmits, useAttrs } from "vue";
+import { defineProps, PropType, computed, defineEmits, ref } from "vue";
 import { ElPagination } from "element-plus";
+
+// 初版table，不支持内部维护分页状态、不支持增删改查等接口的实现
 
 const props = defineProps({
   tableOptions: {
@@ -73,7 +100,11 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:current-page", "update:page-size"]);
+const emit = defineEmits([
+  "update:current-page",
+  "update:page-size",
+  "updateContract",
+]);
 
 const tp = computed({
   get: () => props.currentPage,
@@ -88,6 +119,25 @@ const ps = computed({
 const { tableOptions } = props;
 
 const { columnOptions, paginationOption } = tableOptions;
+
+// 处理可编辑行的思路：给每一行加个editable对象，里面放的就是
+// 当前行的键
+
+// 但这样做效率低下，而且会占用很多空间...实际上从功能上出发，我们是
+// 点击icon触发编辑，而不是点击单元格触发编辑，这样就能规避掉单元格
+// 点击拿不到index，只能拿到row和column的问题
+// 拿到index和column就能确定唯一的当前单元格，通过这个就能指定渲染
+// input或者其它功能了
+
+const currentEditCell = ref("");
+const handleCellClick = ($index: any, row: any, column: any) => {
+  currentEditCell.value = $index + column["property"];
+};
+
+const handleCellCheck = ($index: any, row: any, column: any) => {
+  currentEditCell.value = "";
+  emit("updateContract", row);
+};
 </script>
 
 <style scoped></style>
