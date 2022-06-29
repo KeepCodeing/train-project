@@ -4,6 +4,7 @@ import Main from "./main";
 import Employee from "./employee";
 import Assignment from "./assignment";
 import Enterprise from "./enterprise";
+import Personal from "./personal";
 
 // 考虑到大部分功能都是CRUD，所以没法做成子菜单，这里再对一些接口进行分类，这样
 // 就能放到子菜单里了
@@ -39,6 +40,7 @@ export const routes: RouteRecordRaw[] = [
   ...Employee,
   ...Assignment,
   ...Enterprise,
+  ...Personal,
 ];
 
 export default createRouter({

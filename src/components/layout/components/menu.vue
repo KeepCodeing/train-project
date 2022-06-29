@@ -9,12 +9,12 @@
     <template v-for="item in routes" :key="item.path">
       <!-- 发现项目里根本没有可以展示得一级路由... -->
       <el-menu-item
-        v-if="!item.meta!.hidden && !item.children!.length"
+        v-if="!item.meta?.hidden && !item.children?.length"
         >{{ item.meta!.title }}</el-menu-item
       >
       <el-sub-menu
         :index="item.path"
-        v-else-if="!item.meta!.hidden && item.children!.length"
+        v-else-if="item.meta && !item.meta.hidden && item.children?.length"
       >
         <template #title>
           <!-- 自动引入加上动态组件果不其然又出问题了...改为全局
@@ -22,23 +22,23 @@
            -->
           <!-- <component :is="`i-ep-${item.meta!.icon}`"></component> -->
           <el-icon>
-            <component :is="capitalize(item.meta!.icon as string)"></component>
+            <component :is="capitalize(item.meta?.icon as string)"></component>
           </el-icon>
-          <span>{{ item.meta!.title }}</span>
+          <span>{{ item.meta?.title }}</span>
         </template>
         <template v-for="subitem in item.children">
           <el-menu-item
             :index="`${item.path}/${subitem.path}`"
-            v-if="!subitem.meta!.hidden"
+            v-if="!subitem.meta?.hidden"
             :route="subitem"
             @click="$router.push(`${item.path}/${subitem.path}`)"
           >
             <el-icon>
               <component
-                :is="capitalize(subitem.meta!.icon as string)"
+                :is="capitalize(subitem.meta?.icon as string)"
               ></component>
             </el-icon>
-            {{ subitem.meta!.title }}
+            {{ subitem.meta?.title }}
           </el-menu-item>
         </template>
       </el-sub-menu>

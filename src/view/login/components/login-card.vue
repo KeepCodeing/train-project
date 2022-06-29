@@ -1,18 +1,6 @@
 <template>
   <div
-    class="
-      h-[700px]
-      shadow-md
-      bg-white
-      w-[1100px]
-      grid grid-cols-6
-      rounded-md
-      overflow-hidden
-      absolute
-      left-1/2
-      top-1/2
-      -translate-y-1/2 -translate-x-1/2
-    "
+    class="h-[700px] shadow-md bg-white w-[1100px] grid grid-cols-6 rounded-md overflow-hidden absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2"
   >
     <div class="col-span-4 p-20 text-center">
       <div class="text-3xl font-serif font-medium text-[rgb(225,216,195)]">
@@ -22,7 +10,7 @@
           class="cursor-pointer"
           >注册</span
         >
-        <span class="text-blue-300 px-3">/</span>
+        <span class="px-3 text-blue-300">/</span>
         <span
           @click="changeLogin('login')"
           :class="{
@@ -32,7 +20,7 @@
           >登录</span
         >
       </div>
-      <div class="mt-20 px-20">
+      <div class="px-20 mt-20">
         <advanced-form ref="form" :form-options="formOptions">
           <template #valid-code>
             <el-row class="w-full">
@@ -74,7 +62,7 @@
             >
             <el-button
               @click="scoped.submitForm(handleSubmit)"
-              class="mt-4 w-full"
+              class="w-full mt-4"
               style="margin-left: 0"
               plain
               :class="logState ? 'login-btn' : 'reg-btn'"
@@ -108,6 +96,8 @@ const validCode = ref("");
 const form = ref<any>();
 
 const $baseMessage: any = inject("$baseMessage");
+
+const $writeUserInfo: any = inject("$writeUserInfo");
 
 const router = useRouter();
 
@@ -255,19 +245,18 @@ const handleSubmit = (valid: boolean, model: any) => {
           message: "登录成功辣！",
           type: "success",
         });
+        $writeUserInfo(res.data);
         setTimeout(
           () =>
             router.replace({
               path: "/dashboard/home",
-              query: { userName: model.userName },
+              // query: { userName: model.userName },
             }),
           300
         );
       }
     }
   );
-  //
-  // console.log(valid, model);
 };
 </script>
 
