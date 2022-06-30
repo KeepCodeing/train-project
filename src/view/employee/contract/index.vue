@@ -5,7 +5,8 @@
       v-model:page-size="state.pageSize"
       :loading="loading"
       :tableOptions="tableOptions"
-      @updateContract="updateContract"
+      @updateCellData="updateContract"
+      @updateRowData="updateRowContract"
     ></advanced-table>
   </div>
 </template>
@@ -51,7 +52,6 @@ const tableOptions = reactive<TableProp>({
     {
       prop: "contractName",
       label: "合同名称",
-      width: 200,
       editable: true,
     },
     {
@@ -59,16 +59,20 @@ const tableOptions = reactive<TableProp>({
       label: "合同内容",
       showOverflowTooltip: true,
       editable: true,
+      width: 800,
     },
     {
       prop: "effectiveDate",
       label: "合同生效时间",
-      editable: true,
     },
     {
       prop: "expirationTime",
       label: "合同过期时间",
-      editable: true,
+    },
+    {
+      slot: "action",
+      label: "操作",
+      width: 200,
     },
   ],
   paginationOption: {
@@ -95,8 +99,18 @@ const loadTableData = async (params = { cp: 1, ls: 10 }) => {
   loading.value = false;
 };
 
-const updateContract = (row: ContractBodyProp) => {
-  updateContractAPI({ id: row.id, contractName: row.contractName });
+const updateContract = (row: ContractBodyProp, column: any, $index: number) => {
+  updateContractAPI({
+    id: row.id,
+    [column["property"]]: row[column["property"]],
+  });
+};
+
+const updateRowContract = (editRow: ContractBodyProp, row: any) => {
+  updateContractAPI({
+    id: row.id,
+    ...editRow,
+  });
 };
 
 watch([currentPage, pageSize], (val) => {

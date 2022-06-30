@@ -28,17 +28,32 @@
             v-if="opt.slot"
             :name="opt.slot"
             v-bind="{ $index, row, column }"
-          ></slot>
-          <template v-else-if="currentEditCell === $index + column['property']">
+          >
+            <!-- 如果slot为action，那么提供一个默认操作选项 -->
+            <template v-if="opt.slot === 'action'">
+              <el-button
+                type="primary"
+                @click="handleRowEditClick($index, row, column)"
+                >{{ $index === currentEditRow ? "保存" : "编辑" }}</el-button
+              >
+              <el-button type="danger">删除</el-button>
+            </template>
+          </slot>
+          <template
+            v-else-if="
+              currentEditCell === $index + column['property'] ||
+              (opt.editable && $index === currentEditRow)
+            "
+          >
             <el-input
-              style="width: 90%"
+              style="width: 80%"
               v-model="row[column['property']]"
             ></el-input>
             <el-icon
               @click="handleCellCheck($index, row, column)"
               class="ml-1 cursor-pointer"
             >
-              <check />
+              <check v-show="!(opt.editable && $index === currentEditRow)" />
             </el-icon>
           </template>
           <template v-else-if="opt.editable">
@@ -76,14 +91,7 @@
 
 <script setup lang="ts">
 import { TableProp } from "./types";
-import {
-  defineProps,
-  PropType,
-  computed,
-  defineEmits,
-  ref,
-  useAttrs,
-} from "vue";
+import { defineProps, PropType, computed, defineEmits, ref } from "vue";
 import { ElPagination } from "element-plus";
 
 // 初版table，不支持内部维护分页状态、不支持增删改查等接口的实现
@@ -107,12 +115,14 @@ const props = defineProps({
   },
 });
 
-const { onUpdateContract: updateContract }: any = useAttrs();
+// 其实也可以用attr...，只不过之前在这里解构写死了所以有种不能灵活命名的错觉
+// const { onUpdateContract: updateContract }: any = useAttrs();
 
 const emit = defineEmits([
   "update:current-page",
   "update:page-size",
-  // "updateContract", 改为attrs直接传入
+  "updateCellData", // 改为attrs直接传入
+  "updateRowData",
 ]);
 
 const tp = computed({
@@ -129,6 +139,13 @@ const { tableOptions } = props;
 
 const { columnOptions, paginationOption } = tableOptions;
 
+const editableColumn = computed(() =>
+  columnOptions.reduce((prev: any, now: any) => {
+    if (now.editable) prev.push(now.prop!);
+    return prev;
+  }, [])
+);
+
 // 处理可编辑行的思路：给每一行加个editable对象，里面放的就是
 // 当前行的键
 
@@ -138,15 +155,32 @@ const { columnOptions, paginationOption } = tableOptions;
 // 拿到index和column就能确定唯一的当前单元格，通过这个就能指定渲染
 // input或者其它功能了
 
+const currentEditRow = ref(-1);
 const currentEditCell = ref("");
+
 const handleCellClick = ($index: any, row: any, column: any) => {
   currentEditCell.value = $index + column["property"];
 };
 
+const handleRowEditClick = ($index: any, row: any, column: any) => {
+  currentEditCell.value = "";
+  if (currentEditRow.value === $index) {
+    const editRow = editableColumn.value.reduce((prev: any, now: any) => {
+      prev[now] = row[now];
+      return prev;
+    }, {});
+    emit("updateRowData", editRow, row, column, $index);
+    currentEditRow.value = -1;
+    return;
+  }
+  currentEditRow.value = $index;
+};
+
 const handleCellCheck = ($index: any, row: any, column: any) => {
   currentEditCell.value = "";
-  // emit("updateContract", row);
-  updateContract(row);
+  // 还是改为了emit形式，原因是attr无法统一方法名
+  emit("updateCellData", row, column, $index);
+  // updateContract($index, row, column);
 };
 </script>
 
