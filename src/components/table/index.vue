@@ -36,7 +36,18 @@
                 @click="handleRowEditClick($index, row, column)"
                 >{{ $index === currentEditRow ? "保存" : "编辑" }}</el-button
               >
-              <el-button type="danger">删除</el-button>
+              <el-popconfirm
+                confirm-button-text="确定"
+                cancel-button-text="取消"
+                icon="InfoFilled"
+                icon-color="#626AEF"
+                title="确定要删除这条数据吗？"
+                @confirm="() => handleRowDelete($index, row, column)"
+              >
+                <template #reference>
+                  <el-button type="danger">删除</el-button>
+                </template>
+              </el-popconfirm>
             </template>
           </slot>
           <template
@@ -123,6 +134,7 @@ const emit = defineEmits([
   "update:page-size",
   "updateCellData", // 改为attrs直接传入
   "updateRowData",
+  "deleteRowData",
 ]);
 
 const tp = computed({
@@ -162,6 +174,13 @@ const handleCellClick = ($index: any, row: any, column: any) => {
   currentEditCell.value = $index + column["property"];
 };
 
+const handleCellCheck = ($index: any, row: any, column: any) => {
+  currentEditCell.value = "";
+  // 还是改为了emit形式，原因是attr无法统一方法名
+  emit("updateCellData", row, column, $index);
+  // updateContract($index, row, column);
+};
+
 const handleRowEditClick = ($index: any, row: any, column: any) => {
   currentEditCell.value = "";
   if (currentEditRow.value === $index) {
@@ -176,11 +195,8 @@ const handleRowEditClick = ($index: any, row: any, column: any) => {
   currentEditRow.value = $index;
 };
 
-const handleCellCheck = ($index: any, row: any, column: any) => {
-  currentEditCell.value = "";
-  // 还是改为了emit形式，原因是attr无法统一方法名
-  emit("updateCellData", row, column, $index);
-  // updateContract($index, row, column);
+const handleRowDelete = ($index: any, row: any, column: any) => {
+  emit("deleteRowData", row, column, $index);
 };
 </script>
 

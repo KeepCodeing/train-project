@@ -40,3 +40,10 @@ export function updateContract(data: ContractBodyProp) {
     data,
   });
 }
+
+export function deleteContract(data: ContractBodyProp) {
+  return request({
+    url: `/api/personnelmanagementsystem/contract/deleteContractById/${data.id}`,
+    method: "POST",
+  });
+}

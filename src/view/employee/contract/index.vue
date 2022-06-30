@@ -7,6 +7,7 @@
       :tableOptions="tableOptions"
       @updateCellData="updateContract"
       @updateRowData="updateRowContract"
+      @deleteRowData="deleteContract"
     ></advanced-table>
   </div>
 </template>
@@ -14,17 +15,20 @@
 <script setup lang="ts">
 import AdvancedTable from "@components/table/index.vue";
 import { TableProp } from "../../../components/types";
-import { reactive, ref, onMounted, watch, toRefs } from "vue";
+import { reactive, ref, onMounted, watch, toRefs, inject } from "vue";
 import {
   getContractData,
   updateContract as updateContractAPI,
   ContractBodyProp,
+  deleteContract as deleteContractAPI,
 } from "@service/contract";
 
 // 这里出现了异步请求，但页面空白的问题...
 // 解决方案之一是用suspense包裹，另外就是用函数式async/await
 
 const loading = ref(false);
+
+const $baseMessage: any = inject("$baseMessage");
 
 const state = reactive({
   contractList: [],
@@ -110,6 +114,24 @@ const updateRowContract = (editRow: ContractBodyProp, row: any) => {
   updateContractAPI({
     id: row.id,
     ...editRow,
+  });
+};
+
+const deleteContract = (row: ContractBodyProp) => {
+  deleteContractAPI({ id: row.id }).then((res: any) => {
+    if (res.code === 200) {
+      $baseMessage({
+        message: "删除成功！",
+        type: "success",
+      });
+      loadTableData();
+      state.currentPage = 1;
+    } else {
+      $baseMessage({
+        message: "删除失败，请重试！",
+        type: "error",
+      });
+    }
   });
 };
 
