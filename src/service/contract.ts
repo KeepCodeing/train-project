@@ -4,6 +4,7 @@ interface ContractParamsProp {
   contractName?: string;
   effectiveDate?: string;
   expirationTime?: string;
+  contractDate?: string;
   content?: string;
   cp?: string;
   ls?: string;
@@ -58,6 +59,9 @@ export function addContract(data: ContractBodyProp) {
 }
 
 export function searchContract(parmas: ContractParamsProp) {
+  // 发现contractDate是一个date1,date2形式的字符串，而页面逻辑里
+  // 为了追求简洁似乎不太好处理，干脆就在请求里处理了
+  // 发现实际上是一个{0: date1, 1: date2}形式的对象...
   const queryStr = Object.keys(parmas)
     .filter((item: string) => Boolean(parmas[item as keyof typeof parmas]))
     .reduce((prev, now, idx) => {

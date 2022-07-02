@@ -276,7 +276,8 @@ const loadTableData = async (params = { cp: 1, ls: 10 }) => {
     : searchContract({
         ls: params.ls,
         cp: params.cp,
-        contractDate: contractDate.value,
+        effectiveDate: contractDate.value[0],
+        expirationTime: contractDate.value[1],
         contractName: contractName.value,
       }));
 
