@@ -48,17 +48,20 @@
 
     <el-form-item v-bind="actionAttrs">
       <slot name="actions" :clearForm="clearForm" :submitForm="submitForm">
-        <el-button
-          v-if="!defaultAction || defaultAction?.clear?.show"
-          @click="clearForm(null)"
-        >
-          {{ defaultAction?.clear?.name || "清空" }}</el-button
-        >
-        <el-button
-          v-if="!defaultAction || defaultAction?.submit?.show"
-          @click="submitForm(null)"
-          >{{ defaultAction?.submit?.name || "确定" }}</el-button
-        >
+        <div class="flex justify-end w-full">
+          <el-button
+            v-if="!defaultAction || defaultAction?.clear?.show"
+            @click="clearForm(null)"
+          >
+            {{ defaultAction?.clear?.name || "清空" }}</el-button
+          >
+          <el-button
+            type="primary"
+            v-if="!defaultAction || defaultAction?.submit?.show"
+            @click="submitForm(null)"
+            >{{ defaultAction?.submit?.name || "确定" }}</el-button
+          >
+        </div>
       </slot>
     </el-form-item>
   </el-form>
@@ -84,6 +87,7 @@ import {
   ElSwitch,
   ElRadioGroup,
   ElRadio,
+  ElDatePicker,
   FormInstance,
 } from "element-plus";
 
@@ -97,6 +101,7 @@ export default defineComponent({
     "el-switch": ElSwitch,
     "el-radio-group": ElRadioGroup,
     "el-radio": ElRadio,
+    "el-date-picker": ElDatePicker,
   },
   props: {
     formOptions: {

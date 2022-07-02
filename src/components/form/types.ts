@@ -10,7 +10,8 @@ export interface FormOptionProp {
     | "radio-group"
     | "radio"
     | "switch"
-    | "slot";
+    | "slot"
+    | "date-picker";
 
   prop: string;
 

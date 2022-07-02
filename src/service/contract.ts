@@ -4,6 +4,7 @@ interface ContractParamsProp {
   contractName?: string;
   effectiveDate?: string;
   expirationTime?: string;
+  content?: string;
   cp?: string;
   ls?: string;
   id?: number;
@@ -45,5 +46,29 @@ export function deleteContract(data: ContractBodyProp) {
   return request({
     url: `/api/personnelmanagementsystem/contract/deleteContractById/${data.id}`,
     method: "POST",
+  });
+}
+
+export function addContract(data: ContractBodyProp) {
+  return request({
+    url: "/api/personnelmanagementsystem/contract/addContract",
+    method: "POST",
+    data,
+  });
+}
+
+export function searchContract(parmas: ContractParamsProp) {
+  const queryStr = Object.keys(parmas)
+    .filter((item: string) => Boolean(parmas[item as keyof typeof parmas]))
+    .reduce((prev, now, idx) => {
+      return (
+        prev +
+        `${idx !== 0 ? "&" : ""}${now}=${parmas[now as keyof typeof parmas]}`
+      );
+    }, "");
+  // console.log(queryStr);
+  return request({
+    url: `/api/personnelmanagementsystem/contract/getSplitContractList?${queryStr}`,
+    method: "GET",
   });
 }
