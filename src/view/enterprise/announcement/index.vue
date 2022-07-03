@@ -37,9 +37,6 @@ const getTableData = async (parmas: AnnouncementParams) => {
   });
 };
 
-// 搜索和普通加载是一样的，这里直接写成普通加载了..
-// 区别在于参数个数，搜索需要判断是否非空
-// const getSearchData = () => {};
 const updateTableData = (model: any) => {
   return updateAnnouncement(model);
 };

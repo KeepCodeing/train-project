@@ -16,12 +16,11 @@
 
 <script setup lang="ts">
 /**
- * getTableData
- * getSearchData
- * updateTableData
- * updateTableRowData
- * deleteTableData
- * addTableData
+ * getTableData 获取表格数据，对应接口里的分页查询
+ * getSearchData 获取查询数据，没有特殊需求不需要改，直接用上面的就行
+ * updateTableData 更新表格数据，包括单个和多个字段更新，对应更新接口
+ * deleteTableData 删除表格数据，对应删除删除接口
+ * addTableData 增加表格数据，对应新增数据接口
  */
 import AdvancedTableV2 from "@components/table-v2/index.vue";
 import { reactive } from "vue";
