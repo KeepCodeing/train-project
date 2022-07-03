@@ -56,10 +56,12 @@
               (opt.editable && $index === currentEditRow)
             "
           >
-            <el-input
+            <component
+              v-bind="opt.editAttrs"
+              :is="opt.editType ? `el-${opt.editType}` : 'el-input'"
               style="width: 80%"
               v-model="row[column['property']]"
-            ></el-input>
+            ></component>
             <el-icon
               @click="handleCellCheck($index, row, column)"
               class="ml-1 cursor-pointer"
@@ -104,6 +106,19 @@
 import { TableProp } from "./types";
 import { defineProps, PropType, computed, defineEmits, ref } from "vue";
 import { ElPagination } from "element-plus";
+
+import {
+  ElInput,
+  ElSelect,
+  ElOption,
+  ElCheckboxGroup,
+  ElCheckbox,
+  ElSwitch,
+  ElRadioGroup,
+  ElRadio,
+  ElDatePicker,
+  FormInstance,
+} from "element-plus";
 
 // 初版table，不支持内部维护分页状态、不支持增删改查等接口的实现
 

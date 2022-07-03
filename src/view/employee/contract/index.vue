@@ -162,10 +162,22 @@ const tableOptions = reactive<TableProp>({
     {
       prop: "effectiveDate",
       label: "合同生效时间",
+      editable: true,
+      editAttrs: {
+        format: "YYYY/MM/DD hh:mm:ss",
+        "value-format": "YYYY/MM/DD hh:mm:ss",
+        type: "datetime",
+      },
     },
     {
       prop: "expirationTime",
       label: "合同过期时间",
+      editable: true,
+      editAttrs: {
+        format: "YYYY/MM/DD hh:mm:ss",
+        "value-format": "YYYY/MM/DD hh:mm:ss",
+        type: "datetime",
+      },
     },
     {
       slot: "action",

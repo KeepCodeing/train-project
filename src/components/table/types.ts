@@ -14,6 +14,8 @@ export interface TableColumnProp {
   hidden?: boolean;
   slot?: string;
   editable?: boolean;
+  editType?: string;
+  editAttrs?: any;
 }
 
 export interface PaginationOption {
