@@ -112,10 +112,9 @@ const tableOptions = reactive<TableProp>({
 
 const formOptions = reactive<FormProp>({
   model: {
-    contractName: "",
-    content: "",
-    effectiveDate: "",
-    expirationTime: "",
+    name: "",
+    startTime: "",
+    endTime: "",
   },
   labelWidth: "80px",
   size: "large",

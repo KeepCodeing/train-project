@@ -20,6 +20,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@views/enterprise/department/index.vue"),
         meta: { title: "部门管理", icon: "data-analysis" },
       },
+      {
+        path: "announcement",
+        name: "announcement",
+        component: () => import("@views/enterprise/announcement/index.vue"),
+        meta: { title: "公告管理", icon: "bell" },
+      },
     ],
   },
 ];
