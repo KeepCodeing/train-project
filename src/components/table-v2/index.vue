@@ -45,16 +45,18 @@
             <div class="text-center">与/或</div>
           </el-col>
           <el-col :span="6">
-            <el-date-picker
-              v-model="searchDate"
-              type="daterange"
-              range-separator="To"
-              start-placeholder="Start date"
-              end-placeholder="End date"
-              style="width: 100%"
-              format="YYYY/MM/DD"
-              value-format="YYYY/MM/DD"
-            />
+            <slot name="second-action">
+              <el-date-picker
+                v-model="searchDate"
+                type="daterange"
+                range-separator="To"
+                start-placeholder="Start date"
+                end-placeholder="End date"
+                style="width: 100%"
+                format="YYYY/MM/DD"
+                value-format="YYYY/MM/DD"
+              />
+            </slot>
           </el-col>
           <el-col :span="4">
             <el-button type="primary" @click="filterData(true)">确认</el-button>
@@ -68,7 +70,7 @@
         </el-row>
       </template>
       <template #right>
-        <el-button type="primary" @click="openDialog">{{
+        <el-button v-if="addBtnText" type="primary" @click="openDialog">{{
           addBtnText
         }}</el-button>
       </template>
@@ -101,7 +103,7 @@ import {
   toRefs,
   inject,
   PropType,
-  defineEmits,
+  useSlots,
   useAttrs,
 } from "vue";
 
@@ -147,6 +149,7 @@ const loading = ref(false);
 const $baseMessage: any = inject("$baseMessage");
 
 const attrs: any = useAttrs();
+const slots: any = useSlots();
 
 const state = reactive({
   dataList: [],
@@ -173,7 +176,11 @@ const {
 } = toRefs(state);
 
 const filterData = (ctn = true) => {
-  if (!searchDate.value && !searchName.value) {
+  // console.log(slots);
+  // 如果是传入插槽，那么就不监听插槽输入框的值
+  if (ctn && !searchDate.value && slots["second-action"])
+    searchDate.value = "used";
+  if (ctn && !searchDate.value && !searchName.value) {
     $baseMessage({
       message: "请先输入筛选条件或筛选日期！",
       type: "error",

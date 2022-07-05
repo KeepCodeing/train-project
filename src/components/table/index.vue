@@ -70,7 +70,9 @@
             </el-icon>
           </template>
           <template v-else-if="opt.editable">
-            <span>{{ row[opt.prop!] }}</span>
+            <span
+              >{{ opt.render ? opt.render(row[opt.prop!]) : row[opt.prop!] }}</span
+            >
             <el-icon
               @click="handleCellClick($index, row, column)"
               class="ml-1 cursor-pointer"

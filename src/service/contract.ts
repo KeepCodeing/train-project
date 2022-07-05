@@ -76,3 +76,46 @@ export function searchContract(parmas: ContractParamsProp) {
     method: "GET",
   });
 }
+
+export interface AccountParams {
+  cp?: number;
+  ls?: number;
+  searchName?: string;
+  id?: number;
+}
+
+export function getAccountInfo(params: AccountParams) {
+  const parmasMap = {
+    searchName: "userName",
+    departmentId: "departmentId",
+    cp: "cp",
+    ls: "ls",
+  };
+  return request({
+    url: "/api/personnelmanagementsystem/sysuser/getSplitSysUserList",
+    method: "GET",
+    params: Object.keys(params)
+      .filter((item) => Boolean(params[item as keyof typeof params]))
+      .reduce((prev: any, now) => {
+        prev[parmasMap[now as keyof typeof parmasMap]] =
+          params[now as keyof typeof params];
+        return prev;
+      }, {}),
+  });
+}
+
+export function deleteAccount({ id }: AccountParams) {
+  return request({
+    url: `/api/personnelmanagementsystem/sysuser/deleteById`,
+    method: "POST",
+    data: { id },
+  });
+}
+
+export function updateAccount(model: AccountParams) {
+  return request({
+    url: "/api/personnelmanagementsystem/sysuser/updateUser",
+    method: "POST",
+    data: model,
+  });
+}

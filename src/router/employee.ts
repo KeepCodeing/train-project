@@ -15,7 +15,7 @@ const routes: RouteRecordRaw[] = [
         path: "emp_info",
         name: "emp_info",
         component: () => import("@views/employee/info/index.vue"),
-        meta: { title: "信息管理", icon: "info-filled" },
+        meta: { title: "账号管理", icon: "info-filled" },
       },
       {
         path: "contract",

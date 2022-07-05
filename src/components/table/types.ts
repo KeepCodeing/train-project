@@ -16,6 +16,8 @@ export interface TableColumnProp {
   editable?: boolean;
   editType?: string;
   editAttrs?: any;
+
+  render?: Function;
 }
 
 export interface PaginationOption {
