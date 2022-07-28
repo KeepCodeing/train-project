@@ -53,3 +53,47 @@ export function updateAssignment(model: AssignMentParams) {
     data: model,
   });
 }
+
+export interface SummaryParams {
+  cp?: number;
+  ls?: number;
+  searchName?: string;
+  id?: number;
+}
+
+export function getSummaryInfo(params: SummaryParams) {
+  const parmasMap = {
+    searchName: "content",
+    cp: "cp",
+    ls: "lp",
+  };
+  return request({
+    url: "/api/personnelmanagementsystem/worksummary/queryWorksummary",
+    method: "GET",
+    params: Object.keys(params)
+      .filter((item) => Boolean(params[item as keyof typeof params]))
+      .reduce((prev: any, now) => {
+        prev[parmasMap[now as keyof typeof parmasMap]] =
+          params[now as keyof typeof params];
+        return prev;
+      }, {}),
+  });
+}
+
+export function deleteSummary({ id }: SummaryParams) {
+  return request({
+    url: `/personnelmanagementsystem/worksummary/delWorksummary/${id}`,
+    method: "GET",
+  });
+}
+
+export function updateSummary(model: SummaryParams) {
+  return request({
+    url: "/api/personnelmanagementsystem/worksummary/updateWorksummary",
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+    },
+    data: model,
+  });
+}
