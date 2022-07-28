@@ -111,3 +111,57 @@ export function updateDept(model: DeptParams) {
     data: model,
   });
 }
+
+export interface InfoParams {
+  cp?: number;
+  ls?: number;
+  searchName?: string;
+}
+
+export function getInfo(params: InfoParams) {
+  const parmasMap = {
+    cp: "cp",
+    ls: "lp",
+    searchName: "id",
+  };
+  return request({
+    url: "/api/personnelmanagementsystem/enterprise/queryEnterprise",
+    method: "GET",
+    params: Object.keys(params)
+      .filter((item) => Boolean(params[item as keyof typeof params]))
+      .reduce((prev: any, now) => {
+        prev[parmasMap[now as keyof typeof parmasMap]] =
+          params[now as keyof typeof params];
+        return prev;
+      }, {}),
+  });
+}
+
+export function addInfo(model: InfoParams) {
+  return request({
+    headers: {
+      "Content-Type": "application/json",
+    },
+    url: "/api/personnelmanagementsystem/enterprise/addEnterprise",
+    method: "POST",
+    data: model,
+  });
+}
+
+export function deleteInfo({ id }: InfoParams) {
+  return request({
+    url: `/api/personnelmanagementsystem/enterprise/delEnterprise/${id}`,
+    method: "GET",
+  });
+}
+
+export function updateInfo(model: InfoParams) {
+  return request({
+    headers: {
+      "Content-Type": "application/json",
+    },
+    url: "/api/personnelmanagementsystem/enterprise/updateEnterprise",
+    method: "POST",
+    data: model,
+  });
+}
