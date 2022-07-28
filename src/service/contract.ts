@@ -119,3 +119,47 @@ export function updateAccount(model: AccountParams) {
     data: model,
   });
 }
+
+export interface SalaryParams {
+  cp?: number;
+  lp?: number;
+  id?: number;
+  reason?: number;
+  amount?: number;
+}
+
+export function getSalaryInfo(params: SalaryParams) {
+  const parmasMap = {
+    cp: "cp",
+    ls: "lp",
+  };
+  return request({
+    url: "/api/personnelmanagementsystem/pay/queryPay",
+    method: "GET",
+    params: Object.keys(params)
+      .filter((item) => Boolean(params[item as keyof typeof params]))
+      .reduce((prev: any, now) => {
+        prev[parmasMap[now as keyof typeof parmasMap]] =
+          params[now as keyof typeof params];
+        return prev;
+      }, {}),
+  });
+}
+
+export function deleteSalary({ id }: SalaryParams) {
+  return request({
+    url: `/api/personnelmanagementsystem/pay/delPay/${id}`,
+    method: "GET",
+  });
+}
+
+export function updateSalary(model: SalaryParams) {
+  return request({
+    url: "/api/personnelmanagementsystem/pay/updatePay",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: model,
+  });
+}

@@ -23,6 +23,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import("@views/employee/contract/index.vue"),
         meta: { title: "合同管理", icon: "document" },
       },
+      {
+        path: "salary",
+        name: "salary",
+        component: () => import("@views/employee/salary/index.vue"),
+        meta: { title: "工资申请", icon: "money" },
+      },
     ],
   },
 ];

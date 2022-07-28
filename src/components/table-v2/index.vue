@@ -24,6 +24,7 @@
   </el-dialog>
   <el-card shadow="never">
     <query-form
+      v-if="showSearch"
       justify="start"
       align="middle"
       :left-span="20"
@@ -145,6 +146,8 @@ const tableOptions = cloneDeep(props.tableOptions);
 const formOptions = cloneDeep(props.formOptions);
 
 const loading = ref(false);
+
+const { showSearch = true } = toRefs(tableOptions);
 
 const $baseMessage: any = inject("$baseMessage");
 
