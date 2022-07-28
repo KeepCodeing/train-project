@@ -53,6 +53,7 @@ const tableOptions = reactive<TableProp>({
   size: "large",
   border: true,
   stripe: true,
+  showAdd: false,
   columnOptions: [
     {
       prop: "id",

@@ -24,7 +24,6 @@
   </el-dialog>
   <el-card shadow="never">
     <query-form
-      v-if="showSearch"
       justify="start"
       align="middle"
       :left-span="20"
@@ -32,7 +31,7 @@
       :rightAttr="{ style: { textAlign: 'right' } }"
       class="mb-5"
     >
-      <template #left>
+      <template v-if="showSearch" #left>
         <el-row :gutter="10">
           <el-col :span="5">
             <el-input
@@ -70,7 +69,7 @@
           </el-col>
         </el-row>
       </template>
-      <template #right>
+      <template v-if="showAdd" #right>
         <el-button v-if="addBtnText" type="primary" @click="openDialog">{{
           addBtnText
         }}</el-button>
@@ -147,7 +146,7 @@ const formOptions = cloneDeep(props.formOptions);
 
 const loading = ref(false);
 
-const { showSearch = true } = toRefs(tableOptions);
+const { showSearch = true, showAdd = true } = toRefs(tableOptions);
 
 const $baseMessage: any = inject("$baseMessage");
 

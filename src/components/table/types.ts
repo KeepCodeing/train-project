@@ -45,6 +45,7 @@ export interface TableProp {
   fit?: boolean;
 
   showSearch?: boolean;
+  showAdd?: boolean;
 
   paginationOption?: PaginationOption;
 }

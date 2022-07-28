@@ -58,3 +58,56 @@ export function updateAnnouncement(model: AnnouncementParams) {
     data: model,
   });
 }
+
+export interface DeptParams {
+  cp?: number;
+  ls?: number;
+  id?: number;
+}
+
+export function getDeptInfo(params: DeptParams) {
+  const parmasMap = {
+    cp: "cp",
+    ls: "lp",
+  };
+  return request({
+    url: "/api/personnelmanagementsystem/department/queryDepartment",
+    method: "GET",
+    params: Object.keys(params)
+      .filter((item) => Boolean(params[item as keyof typeof params]))
+      .reduce((prev: any, now) => {
+        prev[parmasMap[now as keyof typeof parmasMap]] =
+          params[now as keyof typeof params];
+        return prev;
+      }, {}),
+  });
+}
+
+export function addDept(model: DeptParams) {
+  return request({
+    headers: {
+      "Content-Type": "application/json",
+    },
+    url: "/api/personnelmanagementsystem/department/addDepartment",
+    method: "POST",
+    data: model,
+  });
+}
+
+export function deleteDept({ id }: DeptParams) {
+  return request({
+    url: `/api/personnelmanagementsystem/department/delDepartment/${id}`,
+    method: "GET",
+  });
+}
+
+export function updateDept(model: DeptParams) {
+  return request({
+    headers: {
+      "Content-Type": "application/json",
+    },
+    url: "/api/personnelmanagementsystem/department/updateDepartment",
+    method: "POST",
+    data: model,
+  });
+}
