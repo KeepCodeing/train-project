@@ -18,7 +18,7 @@ export function getAnnouncementInfo(params: AnnouncementParams) {
     ls: "ls",
   };
   return request({
-    url: "/api/personnelmanagementsystem/announcement/queryAnnouncement",
+    url: "/personnelmanagementsystem/announcement/queryAnnouncement",
     method: "GET",
     params: Object.keys(params)
       .filter((item) => Boolean(params[item as keyof typeof params]))
@@ -35,7 +35,7 @@ export function addAnnouncement(model: AnnouncementParams) {
     headers: {
       "Content-Type": "application/json",
     },
-    url: "/api/personnelmanagementsystem/announcement/addAnnouncement",
+    url: "/personnelmanagementsystem/announcement/addAnnouncement",
     method: "POST",
     data: model,
   });
@@ -43,7 +43,7 @@ export function addAnnouncement(model: AnnouncementParams) {
 
 export function deleteAnnouncement({ id }: AnnouncementParams) {
   return request({
-    url: `/api/personnelmanagementsystem/announcement/delAnnouncementById/${id}`,
+    url: `/personnelmanagementsystem/announcement/delAnnouncementById/${id}`,
     method: "GET",
   });
 }
@@ -53,7 +53,7 @@ export function updateAnnouncement(model: AnnouncementParams) {
     headers: {
       "Content-Type": "application/json",
     },
-    url: "/api/personnelmanagementsystem/announcement/updateAnnouncement",
+    url: "/personnelmanagementsystem/announcement/updateAnnouncement",
     method: "POST",
     data: model,
   });
@@ -71,7 +71,7 @@ export function getDeptInfo(params: DeptParams) {
     ls: "lp",
   };
   return request({
-    url: "/api/personnelmanagementsystem/department/queryDepartment",
+    url: "/personnelmanagementsystem/department/queryDepartment",
     method: "GET",
     params: Object.keys(params)
       .filter((item) => Boolean(params[item as keyof typeof params]))
@@ -88,7 +88,7 @@ export function addDept(model: DeptParams) {
     headers: {
       "Content-Type": "application/json",
     },
-    url: "/api/personnelmanagementsystem/department/addDepartment",
+    url: "/personnelmanagementsystem/department/addDepartment",
     method: "POST",
     data: model,
   });
@@ -96,7 +96,7 @@ export function addDept(model: DeptParams) {
 
 export function deleteDept({ id }: DeptParams) {
   return request({
-    url: `/api/personnelmanagementsystem/department/delDepartment/${id}`,
+    url: `/personnelmanagementsystem/department/delDepartment/${id}`,
     method: "GET",
   });
 }
@@ -106,7 +106,7 @@ export function updateDept(model: DeptParams) {
     headers: {
       "Content-Type": "application/json",
     },
-    url: "/api/personnelmanagementsystem/department/updateDepartment",
+    url: "/personnelmanagementsystem/department/updateDepartment",
     method: "POST",
     data: model,
   });
@@ -125,7 +125,7 @@ export function getInfo(params: InfoParams) {
     searchName: "id",
   };
   return request({
-    url: "/api/personnelmanagementsystem/enterprise/queryEnterprise",
+    url: "/personnelmanagementsystem/enterprise/queryEnterprise",
     method: "GET",
     params: Object.keys(params)
       .filter((item) => Boolean(params[item as keyof typeof params]))
@@ -142,7 +142,7 @@ export function addInfo(model: InfoParams) {
     headers: {
       "Content-Type": "application/json",
     },
-    url: "/api/personnelmanagementsystem/enterprise/addEnterprise",
+    url: "/personnelmanagementsystem/enterprise/addEnterprise",
     method: "POST",
     data: model,
   });
@@ -150,7 +150,7 @@ export function addInfo(model: InfoParams) {
 
 export function deleteInfo({ id }: InfoParams) {
   return request({
-    url: `/api/personnelmanagementsystem/enterprise/delEnterprise/${id}`,
+    url: `/personnelmanagementsystem/enterprise/delEnterprise/${id}`,
     method: "GET",
   });
 }
@@ -160,7 +160,7 @@ export function updateInfo(model: InfoParams) {
     headers: {
       "Content-Type": "application/json",
     },
-    url: "/api/personnelmanagementsystem/enterprise/updateEnterprise",
+    url: "/personnelmanagementsystem/enterprise/updateEnterprise",
     method: "POST",
     data: model,
   });

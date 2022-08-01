@@ -17,9 +17,10 @@ const instance = axios.create({
   // 无法路径重写，也就没法通过代理服务器跨域请求...
   // 记得在cli里是不会这样的？
   // baseURL: "http://huiyuanai.cloud:8091",
-  // baseURL: import.meta.env.PROD
-  //   ? import.meta.env.VITE_PRO_BASE_URL
-  //   : import.meta.env.VITE_DEV_BASE_URL,
+  baseURL:
+    import.meta.env.ENV === "development"
+      ? import.meta.env.VITE_PRO_BASE_URL
+      : import.meta.env.VITE_DEV_BASE_URL,
   headers: {
     "Content-Type": "multipart/form-data",
   },

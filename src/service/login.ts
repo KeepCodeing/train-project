@@ -9,7 +9,7 @@ interface LoginProp {
 
 export function accountLogin({ userName, password }: LoginProp) {
   return request({
-    url: "/api/personnelmanagementsystem/sysuser/userLoginByUserNameAndPwd",
+    url: "/personnelmanagementsystem/sysuser/userLoginByUserNameAndPwd",
     method: "POST",
     data: {
       userName,
@@ -20,7 +20,7 @@ export function accountLogin({ userName, password }: LoginProp) {
 
 export function userRegister({ userName, password, phone }: LoginProp) {
   return request({
-    url: "/api/personnelmanagementsystem/sysuser/registerUser",
+    url: "/personnelmanagementsystem/sysuser/registerUser",
     method: "POST",
     data: {
       userName,
@@ -32,7 +32,7 @@ export function userRegister({ userName, password, phone }: LoginProp) {
 
 export function sendValidCode({ phone }: LoginProp) {
   return request({
-    url: "/api/personnelmanagementsystem/sysuser/sendVerificationCodeByPhone",
+    url: "/personnelmanagementsystem/sysuser/sendVerificationCodeByPhone",
     method: "GET",
     params: {
       phone,
@@ -43,7 +43,7 @@ export function sendValidCode({ phone }: LoginProp) {
 export function phoneLogin({ phone, validCode }: LoginProp) {
   // 手机号登陆
   return request({
-    url: "/api/personnelmanagementsystem/sysuser/userLoginByPhoneAndVerificationCode",
+    url: "/personnelmanagementsystem/sysuser/userLoginByPhoneAndVerificationCode",
     method: "POST",
     data: {
       phone,

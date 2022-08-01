@@ -18,7 +18,7 @@ export function getAssignmentInfo(params: AssignMentParams) {
     ls: "ls",
   };
   return request({
-    url: "/api/personnelmanagementsystem/task/getSplitTaskList",
+    url: "/personnelmanagementsystem/task/getSplitTaskList",
     method: "GET",
     params: Object.keys(params)
       .filter((item) => Boolean(params[item as keyof typeof params]))
@@ -32,7 +32,7 @@ export function getAssignmentInfo(params: AssignMentParams) {
 
 export function addAssignment(model: AssignMentParams) {
   return request({
-    url: "/api/personnelmanagementsystem/task/addTask",
+    url: "/personnelmanagementsystem/task/addTask",
     method: "POST",
     data: model,
   });
@@ -40,7 +40,7 @@ export function addAssignment(model: AssignMentParams) {
 
 export function deleteAssignment({ id }: AssignMentParams) {
   return request({
-    url: "/api/personnelmanagementsystem/task/deleteTaskById",
+    url: "/personnelmanagementsystem/task/deleteTaskById",
     method: "POST",
     data: { id },
   });
@@ -48,7 +48,7 @@ export function deleteAssignment({ id }: AssignMentParams) {
 
 export function updateAssignment(model: AssignMentParams) {
   return request({
-    url: "/api/personnelmanagementsystem/task/updateTask",
+    url: "/personnelmanagementsystem/task/updateTask",
     method: "POST",
     data: model,
   });
@@ -68,7 +68,7 @@ export function getSummaryInfo(params: SummaryParams) {
     ls: "lp",
   };
   return request({
-    url: "/api/personnelmanagementsystem/worksummary/queryWorksummary",
+    url: "/personnelmanagementsystem/worksummary/queryWorksummary",
     method: "GET",
     params: Object.keys(params)
       .filter((item) => Boolean(params[item as keyof typeof params]))
@@ -89,7 +89,7 @@ export function deleteSummary({ id }: SummaryParams) {
 
 export function updateSummary(model: SummaryParams) {
   return request({
-    url: "/api/personnelmanagementsystem/worksummary/updateWorksummary",
+    url: "/personnelmanagementsystem/worksummary/updateWorksummary",
     method: "POST",
     headers: {
       "content-type": "application/json",

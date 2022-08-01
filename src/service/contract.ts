@@ -21,7 +21,7 @@ interface ContractBodyProp {
 
 export function getContractData(params: ContractParamsProp) {
   return request({
-    url: "/api/personnelmanagementsystem/contract/getSplitContractList",
+    url: "/personnelmanagementsystem/contract/getSplitContractList",
     method: "GET",
     params,
   });
@@ -29,7 +29,7 @@ export function getContractData(params: ContractParamsProp) {
 
 export function findContract(params: ContractParamsProp) {
   return request({
-    url: "/api/personnelmanagementsystem/contract/getContractById",
+    url: "/personnelmanagementsystem/contract/getContractById",
     method: "GET",
     params,
   });
@@ -37,7 +37,7 @@ export function findContract(params: ContractParamsProp) {
 
 export function updateContract(data: ContractBodyProp) {
   return request({
-    url: "/api/personnelmanagementsystem/contract/updateContract",
+    url: "/personnelmanagementsystem/contract/updateContract",
     method: "POST",
     data,
   });
@@ -45,14 +45,14 @@ export function updateContract(data: ContractBodyProp) {
 
 export function deleteContract(data: ContractBodyProp) {
   return request({
-    url: `/api/personnelmanagementsystem/contract/deleteContractById/${data.id}`,
+    url: `/personnelmanagementsystem/contract/deleteContractById/${data.id}`,
     method: "POST",
   });
 }
 
 export function addContract(data: ContractBodyProp) {
   return request({
-    url: "/api/personnelmanagementsystem/contract/addContract",
+    url: "/personnelmanagementsystem/contract/addContract",
     method: "POST",
     data,
   });
@@ -72,7 +72,7 @@ export function searchContract(parmas: ContractParamsProp) {
     }, "");
   // console.log(queryStr);
   return request({
-    url: `/api/personnelmanagementsystem/contract/getSplitContractList?${queryStr}`,
+    url: `/personnelmanagementsystem/contract/getSplitContractList?${queryStr}`,
     method: "GET",
   });
 }
@@ -92,7 +92,7 @@ export function getAccountInfo(params: AccountParams) {
     ls: "ls",
   };
   return request({
-    url: "/api/personnelmanagementsystem/sysuser/getSplitSysUserList",
+    url: "/personnelmanagementsystem/sysuser/getSplitSysUserList",
     method: "GET",
     params: Object.keys(params)
       .filter((item) => Boolean(params[item as keyof typeof params]))
@@ -106,7 +106,7 @@ export function getAccountInfo(params: AccountParams) {
 
 export function deleteAccount({ id }: AccountParams) {
   return request({
-    url: `/api/personnelmanagementsystem/sysuser/deleteById`,
+    url: `/personnelmanagementsystem/sysuser/deleteById`,
     method: "POST",
     data: { id },
   });
@@ -114,7 +114,7 @@ export function deleteAccount({ id }: AccountParams) {
 
 export function updateAccount(model: AccountParams) {
   return request({
-    url: "/api/personnelmanagementsystem/sysuser/updateUser",
+    url: "/personnelmanagementsystem/sysuser/updateUser",
     method: "POST",
     data: model,
   });
@@ -134,7 +134,7 @@ export function getSalaryInfo(params: SalaryParams) {
     ls: "lp",
   };
   return request({
-    url: "/api/personnelmanagementsystem/pay/queryPay",
+    url: "/personnelmanagementsystem/pay/queryPay",
     method: "GET",
     params: Object.keys(params)
       .filter((item) => Boolean(params[item as keyof typeof params]))
@@ -148,14 +148,14 @@ export function getSalaryInfo(params: SalaryParams) {
 
 export function deleteSalary({ id }: SalaryParams) {
   return request({
-    url: `/api/personnelmanagementsystem/pay/delPay/${id}`,
+    url: `/personnelmanagementsystem/pay/delPay/${id}`,
     method: "GET",
   });
 }
 
 export function updateSalary(model: SalaryParams) {
   return request({
-    url: "/api/personnelmanagementsystem/pay/updatePay",
+    url: "/personnelmanagementsystem/pay/updatePay",
     method: "POST",
     headers: {
       "Content-Type": "application/json",
