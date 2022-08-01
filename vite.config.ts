@@ -24,8 +24,15 @@ export default defineConfig({
   ],
 
   server: {
+    // proxy: {
+    //   "^/api": {
+    //     target: "http://huiyuanai.cloud:8091",
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, ""),
+    //   },
+    // },
     proxy: {
-      "^/api": {
+      "/api": {
         target: "http://huiyuanai.cloud:8091",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
