@@ -18,7 +18,7 @@ const instance = axios.create({
   // 记得在cli里是不会这样的？
   // baseURL: "http://huiyuanai.cloud:8091",
   baseURL:
-    import.meta.env.ENV === "product"
+    import.meta.env.ENV === "production"
       ? import.meta.env.VITE_PRO_BASE_URL
       : import.meta.env.VITE_DEV_BASE_URL,
   headers: {
