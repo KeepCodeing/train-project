@@ -12,13 +12,14 @@ const errorMessage = {
   503: "服务器出错辣，请刷新后再试！",
 };
 
+// console.log(import.meta.env.MODE);
 const instance = axios.create({
   // 不知道是vite的问题还是axios的问题，这里如果写了baseURL会导致
   // 无法路径重写，也就没法通过代理服务器跨域请求...
   // 记得在cli里是不会这样的？
   // baseURL: "http://huiyuanai.cloud:8091",
   baseURL:
-    import.meta.env.ENV === "production"
+    import.meta.env.MODE === "production"
       ? import.meta.env.VITE_PRO_BASE_URL
       : import.meta.env.VITE_DEV_BASE_URL,
   headers: {
