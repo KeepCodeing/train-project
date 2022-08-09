@@ -22,7 +22,21 @@ const getTableData = async (parmas: any) => {
     code,
   } = await getSalaryInfo({ ...parmas });
   return Promise.resolve({
-    data: { dataList, pages, total },
+    data: {
+      dataList: dataList.map((item: any) => {
+        const s = {
+          1: "处理中",
+          2: "申请中",
+          3: "驳回",
+        };
+        return {
+          ...item,
+          status: s[item.status as keyof typeof s],
+        };
+      }),
+      pages,
+      total,
+    },
     code,
   });
 };
@@ -67,7 +81,7 @@ const tableOptions = reactive<TableProp>({
     {
       prop: "status",
       label: "状态",
-      width: 50,
+      width: 100,
     },
     {
       prop: "applyTime",

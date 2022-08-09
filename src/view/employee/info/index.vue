@@ -85,8 +85,8 @@ const tableOptions = reactive<TableProp>({
       editable: true,
     },
     {
-      prop: "departmentId",
-      label: "部门编号",
+      prop: "departName",
+      label: "部门名称",
       editable: true,
     },
     {
