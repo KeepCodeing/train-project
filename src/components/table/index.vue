@@ -48,6 +48,13 @@
                   <el-button type="danger">删除</el-button>
                 </template>
               </el-popconfirm>
+              <template v-for="ex in opt.externAction">
+                <el-button
+                  @click="handleExternAction($index, row, column)"
+                  type="warning"
+                  >{{ ex(row, column, $index) }}</el-button
+                >
+              </template>
             </template>
           </slot>
           <template
@@ -152,6 +159,7 @@ const emit = defineEmits([
   "updateCellData", // 改为attrs直接传入
   "updateRowData",
   "deleteRowData",
+  "externAction",
 ]);
 
 const tp = computed({
@@ -210,6 +218,10 @@ const handleRowEditClick = ($index: any, row: any, column: any) => {
     return;
   }
   currentEditRow.value = $index;
+};
+
+const handleExternAction = ($index: any, row: any, column: any) => {
+  emit("externAction", row, column, $index);
 };
 
 const handleRowDelete = ($index: any, row: any, column: any) => {

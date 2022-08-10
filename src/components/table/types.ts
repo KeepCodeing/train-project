@@ -17,6 +17,8 @@ export interface TableColumnProp {
   editType?: string;
   editAttrs?: any;
 
+  externAction?: Array<Function>;
+
   render?: Function;
 }
 

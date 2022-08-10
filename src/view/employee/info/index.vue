@@ -5,6 +5,7 @@
       :getSearchData="getTableData"
       :updateTableData="updateTableData"
       :deleteTableData="deleteTableData"
+      @externAction="externAction"
       :tableOptions="tableOptions"
       :searchNameHolder="'员工姓名'"
     >
@@ -102,13 +103,13 @@ const tableOptions = reactive<TableProp>({
     {
       prop: "status",
       label: "账号状态",
-      editable: true,
-      render: (state: string) => (!state ? "正常" : "封禁"),
+      render: (state: number) => (state === 0 ? "正常" : "封禁"),
     },
     {
       slot: "action",
       label: "操作",
-      width: 200,
+      width: 240,
+      externAction: [({ status }) => (status === 0 ? "封禁" : "解禁")],
     },
   ],
   paginationOption: {
@@ -116,6 +117,12 @@ const tableOptions = reactive<TableProp>({
     total: 0,
   },
 });
+
+const externAction = (row: any) => {
+  // console.log($index);
+  row.status = row.status === 0 ? 1 : 0;
+  updateAccount({ ...row });
+};
 </script>
 
 <style scoped></style>

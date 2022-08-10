@@ -83,7 +83,12 @@
       @updateCellData="updateData"
       @updateRowData="updateRow"
       @deleteRowData="deleteData"
-    ></advanced-table>
+      @externAction="externAction"
+    >
+      <!-- <template v-for="item in slotCol" :key="item.slot" #[item.slot!]
+        ><slot :name="item.slot"></slot>
+      </template> -->
+    </advanced-table>
   </el-card>
 </template>
 
@@ -105,6 +110,7 @@ import {
   PropType,
   useSlots,
   useAttrs,
+  computed,
 } from "vue";
 
 const props = defineProps({
@@ -143,6 +149,10 @@ const { dialogTitle, searchNameHolder, addBtnText } = props;
 
 const tableOptions = cloneDeep(props.tableOptions);
 const formOptions = cloneDeep(props.formOptions);
+
+const slotCol = computed(() =>
+  tableOptions.columnOptions.filter((item) => item.slot)
+);
 
 const loading = ref(false);
 
@@ -259,6 +269,12 @@ const deleteData = (row: any) => {
       });
     }
   });
+};
+
+const emit = defineEmits(["externAction"]);
+
+const externAction = ($index: any, row: any, column: any) => {
+  emit("externAction", $index, row, column);
 };
 
 const form = ref<any>();
