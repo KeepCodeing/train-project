@@ -9,7 +9,7 @@
     <template v-for="item in routes" :key="item.path">
       <!-- 发现项目里根本没有可以展示得一级路由... -->
       <el-menu-item
-        v-if="!item.meta?.hidden && !item.children?.length"
+        v-if="!item.meta?.hidden && !item.children?.length && checkRoles(item)"
         >{{ item.meta!.title }}</el-menu-item
       >
       <el-sub-menu
@@ -29,7 +29,7 @@
         <template v-for="subitem in item.children">
           <el-menu-item
             :index="`${item.path}/${subitem.path}`"
-            v-if="!subitem.meta?.hidden"
+            v-if="!subitem.meta?.hidden && checkRoles(subitem)"
             :route="subitem"
             @click="$router.push(`${item.path}/${subitem.path}`)"
           >
@@ -51,6 +51,14 @@
 // 两层循环渲染就完事了
 import { routes } from "../../../router/index";
 import { capitalize } from "lodash";
+import { RouteRecordRaw } from "vue-router";
+import { useUserInfo } from "../../../hooks/useUserInfo";
+
+const checkRoles = (item: RouteRecordRaw) => {
+  const userRole = useUserInfo().getUserInfo().status;
+  if (!item.meta?.roles) return true;
+  return Array.isArray(item.meta.roles) && item.meta.roles.includes(userRole);
+};
 </script>
 
 <style scoped>

@@ -45,6 +45,7 @@ export default defineConfig({
       "@components": "/src/components",
       "@views": "/src/view",
       "@service": "/src/service",
+      "@hooks": "/src/hooks",
     },
   },
 });

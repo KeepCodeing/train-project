@@ -15,13 +15,13 @@ const routes: RouteRecordRaw[] = [
         path: "emp_info",
         name: "emp_info",
         component: () => import("@views/employee/info/index.vue"),
-        meta: { title: "账号管理", icon: "info-filled" },
+        meta: { title: "账号管理", icon: "info-filled", roles: [1] },
       },
       {
         path: "contract",
         name: "contract",
         component: () => import("@views/employee/contract/index.vue"),
-        meta: { title: "合同管理", icon: "document" },
+        meta: { title: "合同管理", icon: "document", roles: [1] },
       },
       {
         path: "salary",
