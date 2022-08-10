@@ -85,9 +85,9 @@
       @deleteRowData="deleteData"
       @externAction="externAction"
     >
-      <!-- <template v-for="item in slotCol" :key="item.slot" #[item.slot!]
+      <template v-for="item in slotCol" :key="item.slot" #[item.slot!]
         ><slot :name="item.slot"></slot>
-      </template> -->
+      </template>
     </advanced-table>
   </el-card>
 </template>

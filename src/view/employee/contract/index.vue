@@ -80,10 +80,22 @@
       v-model:page-size="state.pageSize"
       :loading="loading"
       :tableOptions="tableOptions"
-      @updateCellData="updateContract"
-      @updateRowData="updateRowContract"
-      @deleteRowData="deleteContract"
-    ></advanced-table>
+    >
+      <template #action="{ row }">
+        <el-popconfirm
+          confirm-button-text="确定"
+          cancel-button-text="取消"
+          icon="InfoFilled"
+          icon-color="#626AEF"
+          title="确定要删除这条数据吗？"
+          @confirm="() => deleteContract(row)"
+        >
+          <template #reference>
+            <el-button type="danger">删除</el-button>
+          </template>
+        </el-popconfirm>
+      </template>
+    </advanced-table>
   </el-card>
 </template>
 
@@ -95,7 +107,7 @@ import { TableProp, FormProp } from "../../../components/types";
 import { reactive, ref, onMounted, watch, toRefs, inject } from "vue";
 import {
   getContractData,
-  updateContract as updateContractAPI,
+  // updateContract as updateContractAPI,
   ContractBodyProp,
   deleteContract as deleteContractAPI,
   addContract,
@@ -150,19 +162,18 @@ const tableOptions = reactive<TableProp>({
     {
       prop: "contractName",
       label: "合同名称",
-      editable: true,
     },
     {
       prop: "content",
       label: "合同内容",
       showOverflowTooltip: true,
-      editable: true,
+
       width: 800,
     },
     {
       prop: "effectiveDate",
       label: "合同生效时间",
-      editable: true,
+
       editAttrs: {
         format: "YYYY/MM/DD hh:mm:ss",
         "value-format": "YYYY/MM/DD hh:mm:ss",
@@ -172,7 +183,7 @@ const tableOptions = reactive<TableProp>({
     {
       prop: "expirationTime",
       label: "合同过期时间",
-      editable: true,
+
       editAttrs: {
         format: "YYYY/MM/DD hh:mm:ss",
         "value-format": "YYYY/MM/DD hh:mm:ss",
@@ -182,7 +193,7 @@ const tableOptions = reactive<TableProp>({
     {
       slot: "action",
       label: "操作",
-      width: 200,
+      width: 100,
     },
   ],
   paginationOption: {
@@ -312,19 +323,19 @@ const loadTableData = async (params = { cp: 1, ls: 10 }) => {
   loading.value = false;
 };
 
-const updateContract = (row: ContractBodyProp, column: any, $index: number) => {
-  updateContractAPI({
-    id: row.id,
-    [column["property"]]: row[column["property"]],
-  });
-};
+// const updateContract = (row: ContractBodyProp, column: any, $index: number) => {
+//   updateContractAPI({
+//     id: row.id,
+//     [column["property"]]: row[column["property"]],
+//   });
+// };
 
-const updateRowContract = (editRow: ContractBodyProp, row: any) => {
-  updateContractAPI({
-    id: row.id,
-    ...editRow,
-  });
-};
+// const updateRowContract = (editRow: ContractBodyProp, row: any) => {
+//   updateContractAPI({
+//     id: row.id,
+//     ...editRow,
+//   });
+// };
 
 const deleteContract = (row: ContractBodyProp) => {
   deleteContractAPI({ id: row.id }).then((res: any) => {
